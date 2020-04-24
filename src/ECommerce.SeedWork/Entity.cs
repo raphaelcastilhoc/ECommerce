@@ -2,6 +2,6 @@
 {
     public abstract class Entity<T> where T : struct
     {
-        public T MyProperty { get; private set; }
+        public T Id { get; private set; }
     }
 }

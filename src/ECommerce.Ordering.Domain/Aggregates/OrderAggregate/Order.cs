@@ -12,14 +12,14 @@ namespace ECommerce.Ordering.Domain.Aggregates.OrderAggregate
         {
             BuyerId = buyerId;
             _orderItems = new List<OrderItem>();
-            PurchaseDate = DateTime.Now;
+            Date = DateTime.Now;
         }
 
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
 
         public int BuyerId { get; private set; }
 
-        public DateTime PurchaseDate { get; private set; }
+        public DateTime Date { get; private set; }
 
         public void AddOrderItem(string name, int quantity)
         {
