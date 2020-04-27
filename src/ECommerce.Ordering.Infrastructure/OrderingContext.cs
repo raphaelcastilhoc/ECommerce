@@ -6,16 +6,14 @@ namespace ECommerce.Ordering.Infrastructure
 {
     public class OrderingContext : DbContext
     {
-        public virtual DbSet<Order> Order { get; set; }
+        public OrderingContext(DbContextOptions<OrderingContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-1R3EEK7\\SQLEXPRESS;Initial Catalog=sql_xp_faturamento;User id=sa;Password=Qazplm27; Integrated Security=True");
-        }
+        public virtual DbSet<Order> Order { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OrderEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new BuyerEntityConfiguration());
         }
     }
 }

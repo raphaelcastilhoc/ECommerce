@@ -12,7 +12,7 @@ namespace ECommerce.Ordering.Infrastructure.Repositories
             _orderingContext = orderingContext;
         }
 
-        public async Task Add(Order order)
+        public async Task AddAsync(Order order)
         {
             await _orderingContext.AddAsync(order);
         }
