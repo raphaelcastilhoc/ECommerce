@@ -1,4 +1,5 @@
-﻿using ECommerce.Ordering.Api.Application.Queries;
+﻿using ECommerce.Ordering.Api.Application.Commands;
+using ECommerce.Ordering.Api.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -31,6 +32,14 @@ namespace ECommerce.Ordering.Api.Controllers
                 return NotFound();
 
             return Ok(orders);
+        }
+
+        [HttpPost()]
+        [ProducesResponseType(typeof(OrdersByBuyerIdQueryResult), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<OrdersByBuyerIdQueryResult>>> Post(AddOrderCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }
