@@ -1,4 +1,6 @@
-﻿using ECommerce.Ordering.Api.Application.Commands;
+﻿using ECommerce.ExternalHandlers.Http;
+using ECommerce.Ordering.Api.Application.Commands;
+using ECommerce.Ordering.Api.Application.Constants;
 using ECommerce.Ordering.Domain.Aggregates.BuyerAggregate;
 using ECommerce.Ordering.Domain.Aggregates.OrderAggregate;
 using ECommerce.Ordering.Infrastructure;
@@ -58,7 +60,7 @@ namespace ECommerce.Ordering.Api.Extensions
         public static IServiceCollection AddCustomHttpClient(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddHttpClient("Inventory", client =>
+                .AddHttpClient(HttpClientName.Inventory, client =>
                 {
                     client.BaseAddress = new Uri(configuration.GetValue<string>("ExternalInventoryBaseUrl"));
                 })
@@ -78,6 +80,13 @@ namespace ECommerce.Ordering.Api.Extensions
                 {
                     //Log.Information($"Delaying for { timespan.Seconds } seconds, then making retry { retryAttempt }. Error: {outcome?.Result?.ToString()}");
                 });
+        }
+
+        public static IServiceCollection AddCustomExternalHandlers(this IServiceCollection services)
+        {
+            services.AddScoped<IHttpHandler, HttpHandler>();
+
+            return services;
         }
     }
 }

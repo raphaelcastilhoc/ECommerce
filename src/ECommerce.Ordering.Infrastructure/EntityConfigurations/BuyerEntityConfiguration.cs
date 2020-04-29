@@ -1,5 +1,4 @@
 ﻿using ECommerce.Ordering.Domain.Aggregates.BuyerAggregate;
-using ECommerce.Ordering.Domain.Aggregates.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +12,7 @@ namespace ECommerce.Ordering.Infrastructure.EntityConfigurations
 
             orderConfiguration.HasKey(x => x.Id);
 
-            orderConfiguration.Property("Name");
+            orderConfiguration.Property<string>("Name").IsRequired();
         }
     }
 }
