@@ -64,17 +64,20 @@ namespace ECommerce.Ordering.Api.Extensions
                 {
                     client.BaseAddress = new Uri(configuration.GetValue<string>("ExternalInventoryBaseUrl"));
                 })
-                .AddPolicyHandler(GetRetryPolicy());
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+            services.AddScoped<IHttpHandler, HttpHandler>();
 
             return services;
         }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .WaitAndRetryAsync(
-                retryCount: 5,
+                retryCount: 3,
                 retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (outcome, timespan, retryAttempt, context) =>
                 {
@@ -82,11 +85,11 @@ namespace ECommerce.Ordering.Api.Extensions
                 });
         }
 
-        public static IServiceCollection AddCustomExternalHandlers(this IServiceCollection services)
+        static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
         {
-            services.AddScoped<IHttpHandler, HttpHandler>();
-
-            return services;
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
         }
     }
 }
