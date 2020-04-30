@@ -89,7 +89,16 @@ namespace ECommerce.Ordering.Api.Extensions
         {
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
-                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+                .CircuitBreakerAsync(
+                handledEventsAllowedBeforeBreaking: 2,
+                durationOfBreak: TimeSpan.FromSeconds(30),
+                onBreak: (exception, timespan) =>
+                {
+                    //Log.Error($"Circuit Breaker open");
+                },
+                onReset: () => {
+                    //Log.Information($"Circuit Breaker reseted");
+                });
         }
     }
 }
