@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Polly;
 using Polly.Extensions.Http;
 using System;
@@ -49,6 +50,16 @@ namespace ECommerce.Ordering.Api.Extensions
             return services;
         }
 
+        public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orders Api", Version = "v1" });
+            });
+
+            return services;
+        }
+
         public static IServiceCollection AddCustomMediatr(this IServiceCollection services)
         {
             var applicationAssembly = typeof(AddBuyerCommandHandler).Assembly;
@@ -77,7 +88,7 @@ namespace ECommerce.Ordering.Api.Extensions
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .WaitAndRetryAsync(
-                retryCount: 3,
+                retryCount: 5,
                 retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                 onRetry: (outcome, timespan, retryAttempt, context) =>
                 {
@@ -90,7 +101,7 @@ namespace ECommerce.Ordering.Api.Extensions
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .CircuitBreakerAsync(
-                handledEventsAllowedBeforeBreaking: 2,
+                handledEventsAllowedBeforeBreaking: 4,
                 durationOfBreak: TimeSpan.FromSeconds(30),
                 onBreak: (exception, timespan) =>
                 {

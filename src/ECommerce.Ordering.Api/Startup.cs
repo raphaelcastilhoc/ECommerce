@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ECommerce.Ordering.Api.Extensions;
+﻿using ECommerce.Ordering.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace ECommerce.Ordering.Api
 {
@@ -32,6 +26,7 @@ namespace ECommerce.Ordering.Api
             services
                 .AddRepositories()
                 .AddCustomDbContext(Configuration)
+                .AddCustomSwagger()
                 .AddCustomMediatr()
                 .AddCustomHttpClient(Configuration);
         }
@@ -43,6 +38,8 @@ namespace ECommerce.Ordering.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.AddCustomSwagger();
 
             app.UseMvc();
         }
