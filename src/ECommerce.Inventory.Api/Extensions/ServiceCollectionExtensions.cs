@@ -1,15 +1,14 @@
-﻿using ECommerce.Inventory.Api.Application.Queries;
-using MediatR;
+﻿using ECommerce.Inventory.Domain.Aggregates.ProductAggregate;
+using ECommerce.Inventory.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Inventory.Api.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomMediatr(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            var applicationAssembly = typeof(GetProductByIdQueryHandler).Assembly;
-            services.AddMediatR(applicationAssembly);
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }

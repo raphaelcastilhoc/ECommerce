@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\" />
+    <ProjectReference Include="..\ECommerce.Extensions\ECommerce.Extensions.csproj" />
+    <ProjectReference Include="..\ECommerce.Inventory.Domain\ECommerce.Inventory.Domain.csproj" />
+    <ProjectReference Include="..\ECommerce.Inventory.Infrastructure\ECommerce.Inventory.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

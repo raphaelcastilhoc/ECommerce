@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <Folder Include="Queries\" />
-    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerce.Inventory.Domain\ECommerce.Inventory.Domain.csproj" />
   </ItemGroup>
 
 </Project>

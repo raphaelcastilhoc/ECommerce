@@ -1,4 +1,5 @@
-﻿using ECommerce.Inventory.Api.Application.Queries;
+﻿using ECommerce.Inventory.Api.Application.Commands;
+using ECommerce.Inventory.Api.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -29,6 +30,15 @@ namespace ECommerce.Inventory.Api.Controllers
                 return NotFound();
 
             return Ok(product);
+        }
+
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Post(AddProductCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

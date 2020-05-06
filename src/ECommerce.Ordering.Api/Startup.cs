@@ -1,4 +1,7 @@
-﻿using ECommerce.Ordering.Api.Extensions;
+﻿using ECommerce.Extensions;
+using ECommerce.Ordering.Api.Application.Commands;
+using ECommerce.Ordering.Api.Application.Constants;
+using ECommerce.Ordering.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +27,11 @@ namespace ECommerce.Ordering.Api
             services.Configure<OrderingSettings>(Configuration);
 
             services
-                .AddRepositories()
+                .AddInfrastructure()
                 .AddCustomDbContext(Configuration)
-                .AddCustomSwagger()
-                .AddCustomMediatr()
-                .AddCustomHttpClient(Configuration);
+                .AddCustomSwagger("Order Api")
+                .AddCustomMediatr(typeof(AddBuyerCommandHandler).Assembly)
+                .AddCustomHttpClient(HttpClientName.Inventory, Configuration.GetValue<string>("ExternalInventoryBaseUrl"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +42,7 @@ namespace ECommerce.Ordering.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.AddCustomSwagger();
+            app.UseCustomSwagger("Order Api");
 
             app.UseMvc();
         }
