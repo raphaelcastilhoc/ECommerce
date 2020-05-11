@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Ordering.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.ExternalHandlers", "ECommerce.ExternalHandlers\ECommerce.ExternalHandlers.csproj", "{149978C4-B330-43A4-97E3-56E35A701D37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Extensions", "ECommerce.Extensions\ECommerce.Extensions.csproj", "{2867E82A-6C79-4B9F-BCEE-C805420701F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Extensions", "ECommerce.Extensions\ECommerce.Extensions.csproj", "{2867E82A-6C79-4B9F-BCEE-C805420701F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Location", "Location", "{E4B904D3-5F83-4036-BA55-77A3F5CCDAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Location.Api", "ECommerce.Location.Api\ECommerce.Location.Api.csproj", "{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,10 @@ Global
 		{2867E82A-6C79-4B9F-BCEE-C805420701F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2867E82A-6C79-4B9F-BCEE-C805420701F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2867E82A-6C79-4B9F-BCEE-C805420701F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +95,8 @@ Global
 		{432014A6-2678-4F54-A7E4-3F0210B227CB} = {7F88474A-E28A-40F0-9F96-91E48C953770}
 		{149978C4-B330-43A4-97E3-56E35A701D37} = {F95D6AB5-8D07-49F0-9D92-027241D01E2F}
 		{2867E82A-6C79-4B9F-BCEE-C805420701F9} = {F95D6AB5-8D07-49F0-9D92-027241D01E2F}
+		{E4B904D3-5F83-4036-BA55-77A3F5CCDAE2} = {1296F4FD-0656-463D-9A2E-105E24DA7C15}
+		{2D50A30F-F109-4C83-845F-C1E7EC2A9EEE} = {E4B904D3-5F83-4036-BA55-77A3F5CCDAE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B04A54F6-493D-407B-9763-34293BD3166C}
