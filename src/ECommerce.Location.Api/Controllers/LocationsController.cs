@@ -22,7 +22,7 @@ namespace ECommerce.Location.Api.Controllers
         [HttpGet("ByZipCode/{zipCode}")]
         [ProducesResponseType(typeof(IEnumerable<GetLocationByZipCodeQueryResult>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(int zipCode)
+        public async Task<IActionResult> GetByZipCode(int zipCode)
         {
             var query = new GetLocationByZipCodeQuery(zipCode);
             var locations = await _mediator.Send(query);
