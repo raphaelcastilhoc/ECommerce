@@ -14,6 +14,7 @@ namespace ECommerce.Location.IntegrationTests
     {
         public GetLocationsByZipCodeScenarios(WebApplicationFactory<Startup> factory) : base(factory)
         {
+            new LocationContextDatabase();
         }
 
         [Fact]
