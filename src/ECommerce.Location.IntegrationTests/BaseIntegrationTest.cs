@@ -20,11 +20,13 @@ namespace ECommerce.Location.IntegrationTests
 
         private static DatabaseContext _databaseContext;
 
+        public HttpClient HttpClient { get; }
+
         public BaseIntegrationTest(WebApplicationFactory<Startup> factory)
         {
             var appsettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
             _factory = factory;
-            factory.WithWebHostBuilder(builder =>
+            HttpClient = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureAppConfiguration((context, conf) =>
                 {
@@ -32,30 +34,11 @@ namespace ECommerce.Location.IntegrationTests
                 })
                 .ConfigureServices(services =>
                 {
-                    //It's just to show how override services
+                    //It's just to show how to override services
                     services.AddScoped<IHttpHandler, HttpHandlerMock>();
                 });
 
             }).CreateClient();
-
-            ConfigureDatabase();
-        }
-
-        public static void Initialize()
-        {
-            var appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            _factory.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureAppConfiguration((context, conf) =>
-                {
-                    conf.AddJsonFile(appSettingsPath);
-                }).ConfigureServices(services =>
-                {
-                    //It's just to show how override services
-                    services.AddScoped<IHttpHandler, HttpHandlerMock>();
-                });
-
-            });
 
             ConfigureDatabase();
         }
@@ -69,11 +52,6 @@ namespace ECommerce.Location.IntegrationTests
 
             _databaseContext = new DatabaseContext(configuration["ConnectionStrings:SqlServer"]);
             _databaseContext.CreateDatabase();
-        }
-
-        public HttpClient GetHttpClient()
-        {
-            return _factory.CreateClient();
         }
 
         public T GetService<T>() where T : class
@@ -98,7 +76,7 @@ namespace ECommerce.Location.IntegrationTests
 
         public void Dispose()
         {
-            _factory.Dispose();
+            _factory?.Dispose();
         }
     }
 }

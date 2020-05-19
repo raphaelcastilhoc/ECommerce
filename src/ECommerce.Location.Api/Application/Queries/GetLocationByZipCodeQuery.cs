@@ -16,11 +16,11 @@ namespace ECommerce.Location.Api.Application.Queries
 
     public class GetLocationByZipCodeQueryResult
     {
-        public int LocationId { get; set; }
+        public int AddressId { get; set; }
 
         public string StreetName { get; set; }
 
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         public int ZipCode { get; set; }
 
@@ -29,10 +29,5 @@ namespace ECommerce.Location.Api.Application.Queries
         public string StateName { get; set; }
 
         public string CountryName { get; set; }
-
-        internal bool Any()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

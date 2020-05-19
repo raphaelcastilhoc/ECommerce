@@ -10,7 +10,7 @@ namespace ECommerce.Location.IntegrationTests
 {
     public class DatabaseContext
     {
-        private readonly static string _dbFilePath = Path.Combine(Environment.CurrentDirectory, "Location.mdf");
+        private readonly static string _dbFilePath = Path.Combine(Environment.CurrentDirectory, "LocationDb.mdf");
         private readonly string _localConnectionString = $@"Data Source=(LocalDB)\mssqllocaldb;Initial Catalog=Location;AttachDbFileName={_dbFilePath};Integrated Security=True;";
 
         private readonly string _applicationConnectionString;
@@ -41,17 +41,17 @@ namespace ECommerce.Location.IntegrationTests
             }
         }
 
-        public void CleanData()
-        {
-            ExecuteScript(_applicationConnectionString, "DeleteAllDataScript.sql");
-        }
-
         public void CreateDatabase()
         {
             ExecuteScript(_localConnectionString, "AuthorizationScript.sql");
             ExecuteScript(_applicationConnectionString, "DropScript.sql");
-            ExecuteScript(_applicationConnectionString, "CreationScript.sql");
+            ExecuteScript(_applicationConnectionString, "CreationSrcipt.sql");
             ExecuteScript(_applicationConnectionString, "DefaultInsertScript.sql");
+        }
+
+        public void CleanData()
+        {
+            ExecuteScript(_applicationConnectionString, "DeleteAllDataScript.sql");
         }
 
         private void ExecuteScript(string connectionString, string scriptName)

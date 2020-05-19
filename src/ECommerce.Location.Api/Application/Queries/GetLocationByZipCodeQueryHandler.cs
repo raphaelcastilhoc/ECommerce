@@ -9,7 +9,7 @@ namespace ECommerce.Location.Api.Application.Queries
 {
     public class GetLocationByZipCodeQueryHandler : IRequestHandler<GetLocationByZipCodeQuery, IEnumerable<GetLocationByZipCodeQueryResult>>
     {
-        private const string query = @"SELECT a.Id, a.StreetName, a.Number, a.ZipCode, c.Name CityName, s.Name StateName, co.Name CountryName
+        private const string query = @"SELECT a.Id AddressId, a.StreetName, a.Number, a.ZipCode, c.Name CityName, s.Name StateName, co.Name CountryName
                                         FROM Address a
                                         INNER JOIN City c on a.CityId = c.Id
                                         INNER JOIN State s on c.StateId = c.Id
