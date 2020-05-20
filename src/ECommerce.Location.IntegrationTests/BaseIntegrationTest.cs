@@ -12,7 +12,9 @@ namespace ECommerce.Location.IntegrationTests
 {
     public class BaseIntegrationTest<T> : IDisposable where T : class
     {
-        private TestServer _testServer;
+        private readonly TestServer _testServer;
+
+        private DatabaseContext _databaseContext;
 
         public DatabaseAccess DatabaseAccess { get; private set; }
 
@@ -46,15 +48,20 @@ namespace ECommerce.Location.IntegrationTests
 
             configuration["ConnectionStrings:SqlServer"] = connection.Replace("%CONTENTROOTPATH%", Environment.CurrentDirectory);
 
-            var databaseContext = new DatabaseContext(configuration["ConnectionStrings:SqlServer"]);
-            databaseContext.CreateDatabase();
+            _databaseContext = new DatabaseContext(configuration["ConnectionStrings:SqlServer"]);
+            _databaseContext.CreateDatabase();
 
-            DatabaseAccess = new DatabaseAccess(databaseContext);
+            DatabaseAccess = new DatabaseAccess(_databaseContext);
         }
 
         public T GetService<T>() where T : class
         {
             return _testServer.Host.Services.GetRequiredService<T>();
+        }
+
+        public void CleanData()
+        {
+            _databaseContext.CleanData();
         }
 
         public void Dispose()

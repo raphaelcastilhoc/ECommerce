@@ -26,7 +26,6 @@ namespace ECommerce.Location.IntegrationTests
         public void CreateDatabase()
         {
             ExecuteScript(_localConnectionString, "AuthorizationScript.sql");
-            //ExecuteScript(ApplicationConnectionString, "DropScript.sql");
             ExecuteScript(ApplicationConnectionString, "CreationSrcipt.sql");
             ExecuteScript(ApplicationConnectionString, "DefaultInsertScript.sql");
         }

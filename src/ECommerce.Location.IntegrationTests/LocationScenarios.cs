@@ -2,6 +2,7 @@
 using ECommerce.Location.Api.Application.Queries;
 using FizzWare.NBuilder;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace ECommerce.Location.IntegrationTests
     [TestClass]
     public class LocationScenarios : BaseIntegrationTest<Startup>
     {
+        [TestCleanup]
+        public void Initialize()
+        {
+            CleanData();
+        }
+
         [TestMethod]
         public async Task GetByZipCode_ShouldReturnOkWithResult()
         {
@@ -33,13 +40,29 @@ namespace ECommerce.Location.IntegrationTests
                 .Build();
 
             //Act
-            //var response = await Client.GetAsync("http://localhost:62140/api/Locations/ByZipCode/36090320");
-            var response = await Client.GetAsync("api/Locations/ByZipCode/36090320");
+            var response = await Client.GetAsync($"{Get.ByZipCode}/36090320");
             var result = JsonConvert.DeserializeObject<IEnumerable<GetLocationByZipCodeQueryResult>>(await response.Content.ReadAsStringAsync());
 
-            //    //Assert
-            response.EnsureSuccessStatusCode();
+            //Assert
             result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [TestMethod]
+        public async Task GetByZipCode_ShouldReturnNotFound()
+        {
+            //Arrange
+            var expectedResult = new NotFoundResult();
+
+            //Act
+            var result = await Client.GetAsync($"{Get.ByZipCode}/36090777");
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        private class Get
+        {
+            public const string ByZipCode = "api/Locations/ByZipCode";
         }
     }
 }
