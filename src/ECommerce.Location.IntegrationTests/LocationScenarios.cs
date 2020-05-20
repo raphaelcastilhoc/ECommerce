@@ -14,7 +14,7 @@ namespace ECommerce.Location.IntegrationTests
     public class LocationScenarios : BaseIntegrationTest<Startup>
     {
         [TestCleanup]
-        public void Initialize()
+        public void Cleanup()
         {
             CleanData();
         }
