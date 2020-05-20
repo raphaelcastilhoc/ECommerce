@@ -27,7 +27,7 @@ namespace ECommerce.Location.Api
             services.Configure<LocationSettings>(Configuration);
 
             services
-                .AddScoped<IDbConnection>(x => new SqlConnection(Configuration.GetValue<string>("ConnectionString")))
+                .AddScoped<IDbConnection>(x => new SqlConnection(Configuration.GetConnectionString("SqlServer")))
                 .AddCustomMediatr(typeof(GetLocationByZipCodeQueryHandler).Assembly)
                 .AddCustomSwagger("Location Api");
         }
