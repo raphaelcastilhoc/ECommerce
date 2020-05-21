@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 
-namespace ECommerce.Location.IntegrationTests
+namespace ECommerce.Location.IntegrationTests.Infra
 {
     public class DatabaseContext
     {
-        private readonly static string _dbFilePath = Path.Combine(Environment.CurrentDirectory, "LocationDb.mdf");
-        private readonly string _localConnectionString = $@"Data Source=(LocalDB)\mssqllocaldb;Initial Catalog=LocationDb;AttachDbFileName={_dbFilePath};Integrated Security=True;";
+        private readonly string _localConnectionString;
+        private readonly string _databaseName;
 
         public string ApplicationConnectionString { get; private set; }
 
@@ -18,14 +18,18 @@ namespace ECommerce.Location.IntegrationTests
         private static readonly Func<string, bool> _isSet = s => s.StartsWith("SET", StringComparison.OrdinalIgnoreCase);
         private static readonly Func<string, bool> _isComment = s => s.StartsWith("/*") && s.EndsWith("*/");
 
-        public DatabaseContext(string applicationConnectionString)
+        public DatabaseContext(string applicationConnectionString, string databaseName)
         {
             ApplicationConnectionString = applicationConnectionString;
+            _databaseName = databaseName;
+
+            var _dbFilePath = Path.Combine(Environment.CurrentDirectory, "LocationDb.mdf");
+            _localConnectionString = $@"Data Source=(LocalDB)\mssqllocaldb;Initial Catalog={databaseName};AttachDbFileName={_dbFilePath};Integrated Security=True;";
         }
 
         public void CreateDatabase()
         {
-            ExecuteScript(_localConnectionString, "AuthorizationScript.sql");
+            ConfigureAuthorization();
             ExecuteScript(ApplicationConnectionString, "CreationSrcipt.sql");
             ExecuteScript(ApplicationConnectionString, "DefaultInsertScript.sql");
         }
@@ -33,6 +37,27 @@ namespace ECommerce.Location.IntegrationTests
         public void CleanData()
         {
             ExecuteScript(ApplicationConnectionString, "DeleteAllDataScript.sql");
+        }
+
+        private void ConfigureAuthorization()
+        {
+            var authorizationSql = $@"ALTER DATABASE [{_databaseName}] SET  READ_WRITE;
+                                    ALTER LOGIN [sa] WITH PASSWORD=N'ECommerce@123';
+                                    ALTER LOGIN [sa] ENABLE;
+                                    ALTER AUTHORIZATION ON DATABASE::[{_databaseName}] TO [sa]";
+
+            using (var connection = new SqlConnection(_localConnectionString))
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = authorizationSql;
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
         }
 
         private void ExecuteScript(string connectionString, string scriptName)

@@ -1,8 +1,3 @@
-﻿GO
-DELETE FROM [dbo].[Address]
+﻿DELETE FROM [dbo].[Address]
 GO
-DELETE FROM [dbo].[City]
-GO
-DELETE FROM [dbo].[State]
-GO
-DELETE FROM [dbo].[Country]
+-- Other commands to delete data

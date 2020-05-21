@@ -1,5 +1,8 @@
 ﻿using ECommerce.Location.Api;
 using ECommerce.Location.Api.Application.Queries;
+using ECommerce.Location.IntegrationTests.DTOs;
+using ECommerce.Location.IntegrationTests.Infra;
+using ECommerce.Location.IntegrationTests.SqlCommands;
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +14,10 @@ using System.Threading.Tasks;
 namespace ECommerce.Location.IntegrationTests
 {
     [TestClass]
-    public class LocationScenarios : BaseIntegrationTest<Startup>
+    public class LocationScenarios : BaseIntegrationTest
     {
-        [TestCleanup]
-        public void Cleanup()
+        [TestInitialize]
+        public void Initialize()
         {
             CleanData();
         }
@@ -23,14 +26,27 @@ namespace ECommerce.Location.IntegrationTests
         public async Task GetByZipCode_ShouldReturnOkWithResult()
         {
             //Arrange
+            var city = await DatabaseAccess.QueryFirstOrDefaultAsync<CityDTO>(CitySqlCommands.Get);
+
+            var addresses = new AddressDTO[3]
+            {
+                new AddressDTO("Diogo Alvares", 777, 36090320, city.Id),
+                new AddressDTO("Diogo Alvares", 888, 36090320, city.Id),
+                new AddressDTO("Diogo Alvares", 999, 36090320, city.Id),
+            };
+            await DatabaseAccess.Address(addresses);
+
             var expectedResult = Builder<GetLocationByZipCodeQueryResult>
                 .CreateListOfSize(3)
                 .TheFirst(1)
                 .With(x => x.Number = 777)
+                .And(x => x.AddressId = addresses[0].Id)
                 .TheNext(1)
                 .With(x => x.Number = 888)
+                .And(x => x.AddressId = addresses[1].Id)
                 .TheNext(1)
                 .With(x => x.Number = 999)
+                .And(x => x.AddressId = addresses[2].Id)
                 .All()
                 .With(x => x.ZipCode = 36090320)
                 .With(x => x.StreetName = "Diogo Alvares")
@@ -40,7 +56,7 @@ namespace ECommerce.Location.IntegrationTests
                 .Build();
 
             //Act
-            var response = await Client.GetAsync($"{Get.ByZipCode}/36090320");
+            var response = await Client.GetAsync($"{ApiEndpoints.Location.GetByZipCode}/36090320");
             var result = JsonConvert.DeserializeObject<IEnumerable<GetLocationByZipCodeQueryResult>>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -54,15 +70,10 @@ namespace ECommerce.Location.IntegrationTests
             var expectedResult = new NotFoundResult();
 
             //Act
-            var result = await Client.GetAsync($"{Get.ByZipCode}/36090777");
+            var result = await Client.GetAsync($"{ApiEndpoints.Location.GetByZipCode}/36090320");
 
             //Assert
             result.Should().BeEquivalentTo(expectedResult);
-        }
-
-        private class Get
-        {
-            public const string ByZipCode = "api/Locations/ByZipCode";
         }
     }
 }

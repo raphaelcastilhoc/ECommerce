@@ -1,4 +1,5 @@
 ﻿using ECommerce.ExternalHandlers.Http;
+using ECommerce.Location.IntegrationTests.Infra;
 using ECommerce.Location.IntegrationTests.Mocks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -10,17 +11,17 @@ using System.Net.Http;
 
 namespace ECommerce.Location.IntegrationTests
 {
-    public class BaseIntegrationTest<T> : IDisposable where T : class
+    public class BaseIntegrationTest
     {
-        private readonly TestServer _testServer;
+        private static TestServer _testServer;
 
-        private DatabaseContext _databaseContext;
+        private static DatabaseContext _databaseContext;
 
-        public DatabaseAccess DatabaseAccess { get; private set; }
+        public static DatabaseAccess DatabaseAccess { get; private set; }
 
-        public HttpClient Client { get; private set; }
+        public static HttpClient Client { get; private set; }
 
-        public BaseIntegrationTest()
+        public static void Initialize<T>() where T : class
         {
             var appSettingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
 
@@ -38,17 +39,20 @@ namespace ECommerce.Location.IntegrationTests
 
             Client = _testServer.CreateClient();
 
-            ConfigureDatabase();
+            var databaseName = typeof(T).Assembly.GetName().Name;
+            ConfigureDatabase(databaseName);
         }
 
-        private void ConfigureDatabase()
+        private static void ConfigureDatabase(string databaseName)
         {
             var configuration = _testServer.Host.Services.GetRequiredService<IConfiguration>();
             var connection = configuration.GetConnectionString("SqlServer");
 
-            configuration["ConnectionStrings:SqlServer"] = connection.Replace("%CONTENTROOTPATH%", Environment.CurrentDirectory);
+            configuration["ConnectionStrings:SqlServer"] = connection
+                .Replace("%DATABASENAME%", databaseName)
+                .Replace("%CONTENTROOTPATH%", Environment.CurrentDirectory);
 
-            _databaseContext = new DatabaseContext(configuration["ConnectionStrings:SqlServer"]);
+            _databaseContext = new DatabaseContext(configuration["ConnectionStrings:SqlServer"], databaseName);
             _databaseContext.CreateDatabase();
 
             DatabaseAccess = new DatabaseAccess(_databaseContext);
@@ -64,7 +68,7 @@ namespace ECommerce.Location.IntegrationTests
             _databaseContext.CleanData();
         }
 
-        public void Dispose()
+        public static void Dispose()
         {
             Client?.Dispose();
             _testServer?.Dispose();

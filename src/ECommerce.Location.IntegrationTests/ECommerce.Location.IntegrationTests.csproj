@@ -44,9 +44,6 @@
     <None Update="LocationDb_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\AuthorizationScript.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Scripts\CreationSrcipt.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
