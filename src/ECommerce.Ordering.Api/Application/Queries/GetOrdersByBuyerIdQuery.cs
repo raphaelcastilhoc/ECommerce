@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace ECommerce.Ordering.Api.Application.Queries
 {
-    public class OrdersByBuyerIdQuery : IRequest<IEnumerable<OrdersByBuyerIdQueryResult>>
+    public class GetOrdersByBuyerIdQuery : IRequest<IEnumerable<OrdersByBuyerIdQueryResult>>
     {
-        public OrdersByBuyerIdQuery(int buyerId)
+        public GetOrdersByBuyerIdQuery(int buyerId)
         {
             BuyerId = buyerId;
         }

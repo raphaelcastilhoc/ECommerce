@@ -1,6 +1,8 @@
 ﻿using ECommerce.Ordering.Api.Application.Commands;
+using ECommerce.Ordering.Api.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -23,6 +25,20 @@ namespace ECommerce.Ordering.Api.Controllers
         {
             await _mediator.Send(command);
             return Ok();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(GetBuyersQueryResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> Get()
+        {
+            var query = new GetBuyersQuery();
+            var buyers = await _mediator.Send(query);
+
+            if (!buyers.Any())
+                return NotFound();
+
+            return Ok(buyers);
         }
     }
 }

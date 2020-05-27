@@ -25,7 +25,7 @@ namespace ECommerce.Ordering.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<IEnumerable<OrdersByBuyerIdQueryResult>>> GetByBuyerId(int buyerId)
         {
-            var ordersByBuyerIdQuery = new OrdersByBuyerIdQuery(buyerId);
+            var ordersByBuyerIdQuery = new GetOrdersByBuyerIdQuery(buyerId);
             var orders = await _mediator.Send(ordersByBuyerIdQuery);
 
             if (!orders.Any())
