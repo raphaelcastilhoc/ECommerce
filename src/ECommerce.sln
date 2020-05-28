@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{66
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Location", "Location", "{BA465524-E38E-49FB-9EF6-0CCCB093AB44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Location.Api.Tests", "ECommerce.Location.Api.Tests\ECommerce.Location.Api.Tests.csproj", "{BD12EA4C-8F7E-4870-82D7-70931D0C66F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Location.Api.UnitTests", "ECommerce.Location.Api.UnitTests\ECommerce.Location.Api.UnitTests.csproj", "{BD12EA4C-8F7E-4870-82D7-70931D0C66F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

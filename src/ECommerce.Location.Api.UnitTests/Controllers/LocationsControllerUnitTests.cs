@@ -45,7 +45,7 @@ namespace ECommerce.Location.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task GetByZipCode_ShouldReturnNotFoundIfNotExistsLocations()
+        public async Task GetByZipCode_ShouldReturnNotFoundResultIfNotExistsLocations()
         {
             //Arrange
             var locations = Enumerable.Empty<GetLocationByZipCodeQueryResult>();
