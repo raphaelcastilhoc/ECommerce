@@ -1,4 +1,5 @@
-﻿using ECommerce.SeedWork;
+﻿using ECommerce.Ordering.Domain.Events;
+using ECommerce.SeedWork;
 using System;
 using System.Collections.Generic;
 
@@ -21,10 +22,12 @@ namespace ECommerce.Ordering.Domain.Aggregates.OrderAggregate
 
         public DateTime Date { get; private set; }
 
-        public void AddOrderItem(string name, int quantity)
+        public void AddOrderItem(int productId, string name, int quantity)
         {
             var orderItem = new OrderItem(name, quantity);
             _orderItems.Add(orderItem);
+
+            AddDomainEvent(new OrderAddedDomainEvent(productId, quantity));
         }
     }
 }

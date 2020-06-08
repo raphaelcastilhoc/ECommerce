@@ -35,7 +35,7 @@ namespace ECommerce.Ordering.Api.Controllers
         }
 
         [HttpPost()]
-        [ProducesResponseType(typeof(OrdersByBuyerIdQueryResult), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<OrdersByBuyerIdQueryResult>>> Post(AddOrderCommand command)
         {
             await _mediator.Send(command);
