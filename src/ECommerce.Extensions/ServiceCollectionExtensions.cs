@@ -1,9 +1,12 @@
-﻿using MediatR;
+﻿using ECommerce.Behaviors;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Polly;
 using Polly.Extensions.Http;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 
@@ -23,6 +26,13 @@ namespace ECommerce.Extensions
 
         public static IServiceCollection AddCustomMediatr(this IServiceCollection services, params Assembly[] assemblies)
         {
+            var validators = AssemblyScanner.FindValidatorsInAssemblies(assemblies);
+            if (validators.Any())
+            {
+                validators.ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
+                services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
+            }
+
             services.AddMediatR(assemblies);
             return services;
         }
