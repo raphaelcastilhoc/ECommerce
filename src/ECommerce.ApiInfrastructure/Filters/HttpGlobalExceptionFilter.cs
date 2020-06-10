@@ -1,5 +1,5 @@
 ﻿using ECommerce.Exceptions;
-using ECommerce.MvcInfrastructure.ActionResults;
+using ECommerce.ApiInfrastructure.ActionResults;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Net;
 
-namespace ECommerce.MvcInfrastructure.Filters
+namespace ECommerce.ApiInfrastructure.Filters
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {

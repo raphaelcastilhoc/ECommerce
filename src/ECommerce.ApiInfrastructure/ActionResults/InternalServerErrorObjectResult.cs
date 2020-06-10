@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerce.MvcInfrastructure.ActionResults
+namespace ECommerce.ApiInfrastructure.ActionResults
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {

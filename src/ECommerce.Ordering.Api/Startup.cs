@@ -1,5 +1,5 @@
 ﻿using ECommerce.Extensions;
-using ECommerce.MvcInfrastructure.Filters;
+using ECommerce.ApiInfrastructure.Filters;
 using ECommerce.Ordering.Api.Application.Commands;
 using ECommerce.Ordering.Api.Application.Constants;
 using ECommerce.Ordering.Api.Extensions;
