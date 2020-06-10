@@ -1,4 +1,4 @@
-﻿using ECommerce.Extensions;
+﻿using ECommerce.ApiInfrastructure.Extensions;
 using ECommerce.Inventory.Api.Application.Queries;
 using ECommerce.Inventory.Api.Extensions;
 using ECommerce.Inventory.Api.Filters;

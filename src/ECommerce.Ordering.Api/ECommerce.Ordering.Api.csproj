@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce.Extensions\ECommerce.Extensions.csproj" />
     <ProjectReference Include="..\ECommerce.ExternalHandlers\ECommerce.ExternalHandlers.csproj" />
     <ProjectReference Include="..\ECommerce.ApiInfrastructure\ECommerce.ApiInfrastructure.csproj" />
     <ProjectReference Include="..\ECommerce.Ordering.Infrastructure\ECommerce.Ordering.Infrastructure.csproj" />

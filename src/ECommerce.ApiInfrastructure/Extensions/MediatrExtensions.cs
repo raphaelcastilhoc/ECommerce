@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ECommerce.Extensions
+namespace ECommerce.ApiInfrastructure.Extensions
 {
     public static class MediatrExtensions
     {

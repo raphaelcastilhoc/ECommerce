@@ -1,4 +1,4 @@
-﻿using ECommerce.Extensions;
+﻿using ECommerce.ApiInfrastructure.Extensions;
 using ECommerce.ExternalHandlers.Http;
 using ECommerce.Ordering.Api.Application.Constants;
 using ECommerce.Ordering.Api.Application.DTOs;

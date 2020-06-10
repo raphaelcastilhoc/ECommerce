@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace ECommerce.Extensions
+namespace ECommerce.ApiInfrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

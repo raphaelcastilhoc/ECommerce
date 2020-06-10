@@ -1,4 +1,4 @@
-﻿using ECommerce.Extensions;
+﻿using ECommerce.ApiInfrastructure.Extensions;
 using ECommerce.Location.Api.Application.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

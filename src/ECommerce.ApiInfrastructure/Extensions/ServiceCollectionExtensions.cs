@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 
-namespace ECommerce.Extensions
+namespace ECommerce.ApiInfrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {

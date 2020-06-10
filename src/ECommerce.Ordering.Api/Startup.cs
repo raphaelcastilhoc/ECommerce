@@ -1,4 +1,4 @@
-﻿using ECommerce.Extensions;
+﻿using ECommerce.ApiInfrastructure.Extensions;
 using ECommerce.ApiInfrastructure.Filters;
 using ECommerce.Ordering.Api.Application.Commands;
 using ECommerce.Ordering.Api.Application.Constants;
