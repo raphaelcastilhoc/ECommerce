@@ -33,6 +33,8 @@ namespace ECommerce.Extensions
                 services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
             }
 
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
             services.AddMediatR(assemblies);
             return services;
         }
