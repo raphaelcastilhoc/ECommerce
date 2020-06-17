@@ -3,6 +3,7 @@ using ECommerce.ExternalHandlers.Http;
 using ECommerce.Ordering.Api.Application.Constants;
 using ECommerce.Ordering.Api.Application.DTOs;
 using ECommerce.Ordering.Domain.Aggregates.OrderAggregate;
+using MassTransit;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace ECommerce.Ordering.Api.Application.Commands
                 await _orderRepository.SaveAsync();
 
                 await _mediator.DispatchDomainEventsAsync(order.DomainEvents);
+
+                
             }
 
             return Unit.Value;
