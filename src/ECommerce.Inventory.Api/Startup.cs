@@ -31,8 +31,7 @@ namespace ECommerce.Inventory.Api
             services
                 .AddInfrastructure()
                 .AddCustomMediatr(typeof(GetProductByIdQueryHandler).Assembly)
-                .AddCustomSwagger("Inventory Api")
-                .AddEventBus();
+                .AddCustomSwagger("Inventory Api");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

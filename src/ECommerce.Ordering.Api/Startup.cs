@@ -36,8 +36,7 @@ namespace ECommerce.Ordering.Api
                 .AddCustomDbContext(Configuration)
                 .AddCustomSwagger("Order Api")
                 .AddCustomMediatr(typeof(AddBuyerCommandHandler).Assembly)
-                .AddCustomHttpClient(HttpClientName.Inventory, Configuration.GetValue<string>("ExternalInventoryBaseUrl"))
-                .AddEventBus();
+                .AddCustomHttpClient(HttpClientName.Inventory, Configuration.GetValue<string>("ExternalInventoryBaseUrl"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
