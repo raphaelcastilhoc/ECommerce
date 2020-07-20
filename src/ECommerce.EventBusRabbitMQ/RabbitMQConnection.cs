@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -10,9 +11,10 @@ namespace ECommerce.EventBusRabbitMQ
 {
     public class RabbitMQConnection : IRabbitMQConnection
     {
-        private readonly IConnectionFactory _connectionFactory;
+        private readonly EventBusRabbitMQSettings _settings;
         private readonly ILogger<RabbitMQConnection> _logger;
         private readonly int _retryCount;
+        private readonly IConnectionFactory _connectionFactory;
         IConnection _connection;
         bool _disposed;
 
@@ -20,13 +22,18 @@ namespace ECommerce.EventBusRabbitMQ
 
         private readonly Policy _policy;
 
-        public RabbitMQConnection(IConnectionFactory connectionFactory,
-            ILogger<RabbitMQConnection> logger,
-            int retryCount = 5)
+        public RabbitMQConnection(IOptions<EventBusRabbitMQSettings> options, ILogger<RabbitMQConnection> logger)
         {
-            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            _settings = options.Value;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _retryCount = retryCount;
+            _retryCount = 5;
+
+            _connectionFactory = new ConnectionFactory
+            {
+                UserName = _settings.UserName,
+                Password = _settings.Password,
+                DispatchConsumersAsync = true
+            };
 
             _policy = Policy.Handle<SocketException>()
                     .Or<BrokerUnreachableException>()

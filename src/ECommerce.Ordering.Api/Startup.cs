@@ -1,5 +1,6 @@
 ﻿using ECommerce.ApiInfrastructure.Extensions;
 using ECommerce.ApiInfrastructure.Filters;
+using ECommerce.EventBusRabbitMQ;
 using ECommerce.Ordering.Api.Application.Commands;
 using ECommerce.Ordering.Api.Application.Constants;
 using ECommerce.Ordering.Api.Extensions;
@@ -30,6 +31,7 @@ namespace ECommerce.Ordering.Api
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Configure<OrderingSettings>(Configuration);
+            services.Configure<EventBusRabbitMQSettings>(Configuration.GetSection("RabbitMQ"));
 
             services
                 .AddInfrastructure()

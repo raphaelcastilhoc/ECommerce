@@ -1,6 +1,7 @@
 ﻿using ECommerce.EventBus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
 using RabbitMQ.Client;
@@ -15,9 +16,8 @@ namespace ECommerce.EventBusRabbitMQ
 {
     public class DirectEventBusRabbitMQ : IEventBus, IDisposable
     {
-        const string ExchangeName = "ecommerce";
-
         private readonly IRabbitMQConnection _connection;
+        private readonly EventBusRabbitMQSettings _settings;
         private readonly ILogger<DirectEventBusRabbitMQ> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly int _retryCount;
@@ -29,11 +29,13 @@ namespace ECommerce.EventBusRabbitMQ
         private IModel _publisherChannel;
 
         public DirectEventBusRabbitMQ(IRabbitMQConnection connection,
+            IOptions<EventBusRabbitMQSettings> options,
             ILogger<DirectEventBusRabbitMQ> logger,
             IServiceProvider serviceProvider)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _settings = options.Value;
             _serviceProvider = serviceProvider;
             _consumerChannel = CreateChannel();
             _publisherChannel = CreateChannel();
@@ -57,7 +59,7 @@ namespace ECommerce.EventBusRabbitMQ
             _logger.LogTrace("Creating RabbitMQ channel");
 
             var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(exchange: ExchangeName, type: "direct");
+            channel.ExchangeDeclare(exchange: _settings.ExchangeName, type: "direct");
 
             return channel;
         }
@@ -75,7 +77,7 @@ namespace ECommerce.EventBusRabbitMQ
 
             _logger.LogTrace("Declaring RabbitMQ exchange to publish event: {EventId}", @event.Id);
 
-            _publisherChannel.ExchangeDeclare(exchange: ExchangeName, type: "direct");
+            _publisherChannel.ExchangeDeclare(exchange: _settings.ExchangeName, type: "direct");
 
             var message = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(message);
@@ -88,7 +90,7 @@ namespace ECommerce.EventBusRabbitMQ
                 _logger.LogTrace("Publishing event to RabbitMQ: {EventId}", @event.Id);
 
                 _publisherChannel.BasicPublish(
-                    exchange: ExchangeName,
+                    exchange: _settings.ExchangeName,
                     routingKey: eventName,
                     basicProperties: properties,
                     body: body);
@@ -102,7 +104,7 @@ namespace ECommerce.EventBusRabbitMQ
             _logger.LogInformation("Subscribing to event {EventName} with {EventHandler}", eventName, typeof(TH).Name);
 
             _consumerChannel.QueueBind(queue: eventName,
-                                      exchange: ExchangeName,
+                                      exchange: _settings.ExchangeName,
                                       routingKey: eventName);
 
             _logger.LogTrace("Starting RabbitMQ basic consume");
