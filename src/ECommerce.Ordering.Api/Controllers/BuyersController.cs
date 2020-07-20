@@ -19,14 +19,6 @@ namespace ECommerce.Ordering.Api.Controllers
             _mediator = mediatr;
         }
 
-        [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Post(AddBuyerCommand command)
-        {
-            await _mediator.Send(command);
-            return Ok();
-        }
-
         [HttpGet]
         [ProducesResponseType(typeof(GetBuyersQueryResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -39,6 +31,14 @@ namespace ECommerce.Ordering.Api.Controllers
                 return NotFound();
 
             return Ok(buyers);
+        }
+
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Post(AddBuyerCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

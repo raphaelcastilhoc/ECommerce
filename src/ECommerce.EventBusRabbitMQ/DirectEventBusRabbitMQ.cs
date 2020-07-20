@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace ECommerce.EventBusRabbitMQ
 {
-    public class EventBusRabbitMQ : IEventBus, IDisposable
+    public class DirectEventBusRabbitMQ : IEventBus, IDisposable
     {
         const string ExchangeName = "ecommerce";
 
         private readonly IRabbitMQConnection _connection;
-        private readonly ILogger<EventBusRabbitMQ> _logger;
+        private readonly ILogger<DirectEventBusRabbitMQ> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly int _retryCount;
         private readonly Policy _policy;
@@ -28,8 +28,8 @@ namespace ECommerce.EventBusRabbitMQ
         private IModel _consumerChannel;
         private IModel _publisherChannel;
 
-        public EventBusRabbitMQ(IRabbitMQConnection connection,
-            ILogger<EventBusRabbitMQ> logger,
+        public DirectEventBusRabbitMQ(IRabbitMQConnection connection,
+            ILogger<DirectEventBusRabbitMQ> logger,
             IServiceProvider serviceProvider)
         {
             _connection = connection ?? throw new ArgumentNullException(nameof(connection));

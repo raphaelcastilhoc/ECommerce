@@ -1,4 +1,6 @@
-﻿using ECommerce.ExternalHandlers.Http;
+﻿using ECommerce.EventBus;
+using ECommerce.EventBusRabbitMQ;
+using ECommerce.ExternalHandlers.Http;
 using ECommerce.Ordering.Domain.Aggregates.BuyerAggregate;
 using ECommerce.Ordering.Domain.Aggregates.OrderAggregate;
 using ECommerce.Ordering.Domain.Events;
@@ -21,6 +23,8 @@ namespace ECommerce.Ordering.Api.Extensions
             services.AddScoped<IBuyerRepository, BuyerRepository>();
 
             services.AddScoped<IHttpHandler, HttpHandler>();
+
+            services.AddScoped<IEventBus, DirectEventBusRabbitMQ>();
 
             return services;
         }
