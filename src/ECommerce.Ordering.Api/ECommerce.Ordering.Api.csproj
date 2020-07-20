@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Application\NewFolder\**" />
-    <Content Remove="Application\NewFolder\**" />
-    <EmbeddedResource Remove="Application\NewFolder\**" />
-    <None Remove="Application\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
@@ -25,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ECommerce.EventBusRabbitMQ\ECommerce.EventBusRabbitMQ.csproj" />
     <ProjectReference Include="..\ECommerce.ExternalHandlers\ECommerce.ExternalHandlers.csproj" />
     <ProjectReference Include="..\ECommerce.ApiInfrastructure\ECommerce.ApiInfrastructure.csproj" />
     <ProjectReference Include="..\ECommerce.Ordering.Infrastructure\ECommerce.Ordering.Infrastructure.csproj" />
