@@ -24,9 +24,6 @@ namespace ECommerce.Ordering.Api.Extensions
 
             services.AddScoped<IHttpHandler, HttpHandler>();
 
-            services.AddScoped<IRabbitMQConnection, RabbitMQConnection>();
-            services.AddScoped<IEventBus, DirectEventBusRabbitMQ>();
-
             return services;
         }
 

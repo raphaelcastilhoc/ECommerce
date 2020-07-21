@@ -103,6 +103,11 @@ namespace ECommerce.EventBusRabbitMQ
 
             _logger.LogInformation("Subscribing to event {EventName} with {EventHandler}", eventName, typeof(TH).Name);
 
+            _consumerChannel.QueueDeclare(queue: eventName,
+                durable: true,
+                exclusive: false,
+                autoDelete: false); ;
+
             _consumerChannel.QueueBind(queue: eventName,
                                       exchange: _settings.ExchangeName,
                                       routingKey: eventName);

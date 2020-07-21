@@ -1,4 +1,6 @@
 ﻿using ECommerce.Behaviors;
+using ECommerce.EventBus;
+using ECommerce.EventBusRabbitMQ;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -79,6 +81,14 @@ namespace ECommerce.ApiInfrastructure.Extensions
                 onReset: () => {
                     //Log.Information($"Circuit Breaker reseted");
                 });
+        }
+
+        public static IServiceCollection AddEventBus(this IServiceCollection services)
+        {
+            services.AddSingleton<IRabbitMQConnection, RabbitMQConnection>();
+            services.AddSingleton<IEventBus, DirectEventBusRabbitMQ>();
+
+            return services;
         }
     }
 }

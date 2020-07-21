@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.Behaviors\ECommerce.Behaviors.csproj" />
+    <ProjectReference Include="..\ECommerce.EventBusRabbitMQ\ECommerce.EventBusRabbitMQ.csproj" />
     <ProjectReference Include="..\ECommerce.Exceptions\ECommerce.Exceptions.csproj" />
   </ItemGroup>
 

@@ -26,7 +26,9 @@ namespace ECommerce.Ordering.Api.Application.Commands
 
         public async Task<Unit> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
-            var product = await _httpHandler.GetAsync<ProductDTO>(HttpClientName.Inventory, $"Products/{request.ProductId}");
+            //var product = await _httpHandler.GetAsync<ProductDTO>(HttpClientName.Inventory, $"Products/{request.ProductId}");
+
+            var product = new ProductDTO { Id = 1, Name = "test", Quantity = 10 };
 
             if (product.Quantity >= request.Quantity)
             {

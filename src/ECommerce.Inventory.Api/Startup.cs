@@ -1,4 +1,6 @@
 ﻿using ECommerce.ApiInfrastructure.Extensions;
+using ECommerce.EventBus;
+using ECommerce.EventBusRabbitMQ;
 using ECommerce.Inventory.Api.Application.Queries;
 using ECommerce.Inventory.Api.Extensions;
 using ECommerce.Inventory.Api.Filters;
@@ -23,19 +25,23 @@ namespace ECommerce.Inventory.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc(options => {
+                .AddMvc(options =>
+                {
                     options.Filters.Add(typeof(ModelValidationFilter));
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.Configure<EventBusRabbitMQSettings>(Configuration.GetSection("RabbitMQ"));
+
             services
                 .AddInfrastructure()
                 .AddCustomMediatr(typeof(GetProductByIdQueryHandler).Assembly)
-                .AddCustomSwagger("Inventory Api");
+                .AddCustomSwagger("Inventory Api")
+                .AddEventBus();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IEventBus eventBus)
         {
             if (env.IsDevelopment())
             {
@@ -43,6 +49,8 @@ namespace ECommerce.Inventory.Api
             }
 
             app.UseCustomSwagger("Inventory Api");
+
+            app.UseEventBus(eventBus);
 
             app.UseMvc();
         }
