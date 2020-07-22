@@ -4,8 +4,8 @@ namespace ECommerce.Inventory.Api.Application.IntegrationEvents
 {
     public class OrderAddedEvent : IntegrationEvent
     {
-        public int ProductId { get; }
+        public int ProductId { get; set; }
 
-        public int Quantity { get; }
+        public int Quantity { get; set; }
     }
 }

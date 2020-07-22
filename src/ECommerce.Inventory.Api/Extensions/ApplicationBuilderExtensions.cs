@@ -8,7 +8,7 @@ namespace ECommerce.Inventory.Api.Extensions
     {
         public static void UseEventBus(this IApplicationBuilder app, IEventBus eventBus)
         {
-            eventBus.Subscribe<OrderAddedEvent, OrderAddedEventHandler>();
+            eventBus.Subscribe<OrderAddedEvent, IIntegrationEventHandler<OrderAddedEvent>>();
         }
     }
 }

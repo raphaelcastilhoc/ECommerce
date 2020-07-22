@@ -1,7 +1,8 @@
-﻿using ECommerce.Inventory.Domain.Aggregates.ProductAggregate;
+﻿using ECommerce.EventBus;
+using ECommerce.Inventory.Api.Application.IntegrationEvents;
+using ECommerce.Inventory.Domain.Aggregates.ProductAggregate;
 using ECommerce.Inventory.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 
 namespace ECommerce.Inventory.Api.Extensions
 {
@@ -10,6 +11,8 @@ namespace ECommerce.Inventory.Api.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<IIntegrationEventHandler<OrderAddedEvent>, OrderAddedEventHandler>();
 
             return services;
         }
