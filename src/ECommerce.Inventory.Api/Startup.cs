@@ -34,7 +34,7 @@ namespace ECommerce.Inventory.Api
             services.Configure<EventBusRabbitMQSettings>(Configuration.GetSection("RabbitMQ"));
 
             services
-                .AddInfrastructure()
+                .AddInfrastructure(Configuration)
                 .AddCustomMediatr(typeof(GetProductByIdQueryHandler).Assembly)
                 .AddCustomSwagger("Inventory Api")
                 .AddEventBus();
