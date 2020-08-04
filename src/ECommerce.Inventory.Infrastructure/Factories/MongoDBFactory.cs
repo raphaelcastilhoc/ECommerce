@@ -19,11 +19,11 @@ namespace ECommerce.Inventory.Infrastructure.Factories
             var client = new MongoClient(url);
             var database = client.GetDatabase("Inventory");
 
-            var conventionPack = new ConventionPack {
-                new IgnoreExtraElementsConvention(true)
-            };
+            //var conventionPack = new ConventionPack {
+            //    new IgnoreExtraElementsConvention(true)
+            //};
 
-            ConventionRegistry.Register("IgnoreExtraElements", conventionPack, x => true);
+            //ConventionRegistry.Register("IgnoreExtraElements", conventionPack, x => true);
 
             return database;
         }

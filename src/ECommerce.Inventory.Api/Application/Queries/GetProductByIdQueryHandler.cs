@@ -14,9 +14,11 @@ namespace ECommerce.Inventory.Api.Application.Queries
             _productRepository = productRepository;
         }
 
-        public Task<GetProductByIdQueryResult> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetProductByIdQueryResult> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new GetProductByIdQueryResult(1, "Product1", 5));
+            var product = await _productRepository.GetByIdAsync(request.Id);
+
+            return new GetProductByIdQueryResult(product.Id.ToString(), product.Name, product.Quantity);
         }
     }
 }

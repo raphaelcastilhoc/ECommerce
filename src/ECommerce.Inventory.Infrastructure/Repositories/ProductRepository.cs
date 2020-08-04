@@ -1,4 +1,5 @@
 ﻿using ECommerce.Inventory.Domain.Aggregates.ProductAggregate;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,9 +15,9 @@ namespace ECommerce.Inventory.Infrastructure.Repositories
             _products = database.GetCollection<Product>("products");
         }
 
-        public async Task<IEnumerable<Product>> GetAsync()
+        public async Task<Product> GetByIdAsync(string id)
         {
-            return await _products.AsQueryable().ToListAsync();
+            return await _products.Find(document => document.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
         }
 
         public async Task AddAsync(Product product)

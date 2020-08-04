@@ -5,7 +5,7 @@ namespace ECommerce.Inventory.Domain.Aggregates.ProductAggregate
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAsync();
+        Task<Product> GetByIdAsync(string id);
 
         Task AddAsync(Product product);
     }

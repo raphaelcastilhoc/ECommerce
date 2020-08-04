@@ -21,7 +21,7 @@ namespace ECommerce.Inventory.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GetProductByIdQueryResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
             var query = new GetProductByIdQuery(id);
             var product = await _mediator.Send(query);

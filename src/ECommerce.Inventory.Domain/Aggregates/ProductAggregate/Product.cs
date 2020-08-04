@@ -1,9 +1,10 @@
 ﻿using ECommerce.SeedWork;
 using FluentValidation;
+using MongoDB.Bson;
 
 namespace ECommerce.Inventory.Domain.Aggregates.ProductAggregate
 {
-    public class Product : Entity<int>, IAggregateRoot
+    public class Product : Entity<ObjectId>, IAggregateRoot
     {
         public Product(string name, string description, int quantity)
         {
