@@ -28,6 +28,11 @@ namespace ECommerce.Location.Api
 
             services
                 .AddScoped<IDbConnection>(x => new SqlConnection(Configuration.GetConnectionString("SqlServer")))
+                .AddDistributedRedisCache(options =>
+                {
+                    options.Configuration = Configuration.GetConnectionString("Redis");
+                    options.InstanceName = "LocationApi-";
+                })
                 .AddCustomMediatr(typeof(GetLocationByZipCodeQueryHandler).Assembly)
                 .AddCustomSwagger("Location Api");
         }

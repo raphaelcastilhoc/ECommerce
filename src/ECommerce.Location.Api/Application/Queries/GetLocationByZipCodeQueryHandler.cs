@@ -1,5 +1,8 @@
 ﻿using Dapper;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
@@ -17,18 +20,40 @@ namespace ECommerce.Location.Api.Application.Queries
                                         WHERE ZipCode = @ZipCode";
 
         private readonly IDbConnection _dbConnection;
+        private readonly IDistributedCache _cache;
 
-        public GetLocationByZipCodeQueryHandler(IDbConnection dbConnection)
+        public GetLocationByZipCodeQueryHandler(IDbConnection dbConnection,
+            IDistributedCache cache)
         {
             _dbConnection = dbConnection;
+            _cache = cache;
         }
 
         public async Task<IEnumerable<GetLocationByZipCodeQueryResult>> Handle(GetLocationByZipCodeQuery request, CancellationToken cancellationToken)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("ZipCode", request.ZipCode);
+            IEnumerable<GetLocationByZipCodeQueryResult> locations;
 
-            var locations = await _dbConnection.QueryAsync<GetLocationByZipCodeQueryResult>(query, parameters);
+            var locationsJson = _cache.GetString($"location:{request.ZipCode}");
+            if (locationsJson == null)
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("ZipCode", request.ZipCode);
+
+                locations = await _dbConnection.QueryAsync<GetLocationByZipCodeQueryResult>(query, parameters);
+
+                if(locations != null)
+                {
+                    locationsJson = JsonConvert.SerializeObject(locations);
+
+                    var cacheOptions = new DistributedCacheEntryOptions();
+                    cacheOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+                    _cache.SetString($"location:{request.ZipCode}", locationsJson, cacheOptions);
+                }
+            }
+            else
+            {
+                locations = JsonConvert.DeserializeObject<IEnumerable<GetLocationByZipCodeQueryResult>>(locationsJson);
+            }
 
             return locations;
         }
