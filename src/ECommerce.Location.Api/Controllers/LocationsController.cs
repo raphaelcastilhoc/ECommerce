@@ -1,4 +1,5 @@
-﻿using ECommerce.Location.Api.Application.Queries;
+﻿using ECommerce.Location.Api.Application.Commands;
+using ECommerce.Location.Api.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -31,6 +32,14 @@ namespace ECommerce.Location.Api.Controllers
                 return NotFound();
 
             return Ok(locations);
+        }
+
+        [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Update(UpdateAddressCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

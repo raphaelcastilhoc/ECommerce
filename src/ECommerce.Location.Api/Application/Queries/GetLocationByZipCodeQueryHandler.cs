@@ -36,18 +36,11 @@ namespace ECommerce.Location.Api.Application.Queries
             var locationsJson = _cache.GetString($"location:{request.ZipCode}");
             if (locationsJson == null)
             {
-                var parameters = new DynamicParameters();
-                parameters.Add("ZipCode", request.ZipCode);
+                locations = await GetLocationsAsync(request);
 
-                locations = await _dbConnection.QueryAsync<GetLocationByZipCodeQueryResult>(query, parameters);
-
-                if(locations != null)
+                if (locations != null)
                 {
-                    locationsJson = JsonConvert.SerializeObject(locations);
-
-                    var cacheOptions = new DistributedCacheEntryOptions();
-                    cacheOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-                    _cache.SetString($"location:{request.ZipCode}", locationsJson, cacheOptions);
+                    await SaveLocationsOnCacheAsync(request, locations);
                 }
             }
             else
@@ -56,6 +49,23 @@ namespace ECommerce.Location.Api.Application.Queries
             }
 
             return locations;
+        }
+
+        private async Task<IEnumerable<GetLocationByZipCodeQueryResult>> GetLocationsAsync(GetLocationByZipCodeQuery request)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("ZipCode", request.ZipCode);
+
+            var locations = await _dbConnection.QueryAsync<GetLocationByZipCodeQueryResult>(query, parameters);
+            return locations;
+        }
+
+        private async Task SaveLocationsOnCacheAsync(GetLocationByZipCodeQuery request, IEnumerable<GetLocationByZipCodeQueryResult> locations)
+        {
+            string locationsJson = JsonConvert.SerializeObject(locations);
+            var cacheOptions = new DistributedCacheEntryOptions();
+            cacheOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+            await _cache.SetStringAsync($"location:{request.ZipCode}", locationsJson, cacheOptions);
         }
     }
 }
