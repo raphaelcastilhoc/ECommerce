@@ -7,10 +7,10 @@ services:
       - 8081:8081
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: sa
-      ME_CONFIG_BASICAUTH_PASSWORD: Qazplm27
+      ME_CONFIG_BASICAUTH_PASSWORD: Abcd1234
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: sa
-      ME_CONFIG_MONGODB_ADMINPASSWORD: Qazplm27
+      ME_CONFIG_MONGODB_ADMINPASSWORD: Abcd1234
     links:
       - mongo
     networks:
@@ -20,7 +20,7 @@ services:
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: sa
-      MONGO_INITDB_ROOT_PASSWORD: Qazplm27
+      MONGO_INITDB_ROOT_PASSWORD: Abcd1234
     ports:
       - "27017:27017"
     volumes:
