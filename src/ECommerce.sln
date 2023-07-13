@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Inventory.Api", "ECommerce.Inventory.Api\ECommerce.Inventory.Api.csproj", "{7CF0D694-264D-4E4B-A612-225721392E7A}"
 EndProject
@@ -51,9 +51,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Exceptions", "ECo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.ApiInfrastructure", "ECommerce.ApiInfrastructure\ECommerce.ApiInfrastructure.csproj", "{7E923F6C-3015-455A-8E71-284B2C331171}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.EventBus", "ECommerce.EventBus\ECommerce.EventBus.csproj", "{9EB901EA-63A9-4741-914F-9FDEE660CB52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.EventBus", "ECommerce.EventBus\ECommerce.EventBus.csproj", "{9EB901EA-63A9-4741-914F-9FDEE660CB52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.EventBusRabbitMQ", "ECommerce.EventBusRabbitMQ\ECommerce.EventBusRabbitMQ.csproj", "{A59B1391-8AC6-401F-919E-C36EC84F05FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.EventBusRabbitMQ", "ECommerce.EventBusRabbitMQ\ECommerce.EventBusRabbitMQ.csproj", "{A59B1391-8AC6-401F-919E-C36EC84F05FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.ShippingService", "ECommerce.ShippingService\ECommerce.ShippingService.csproj", "{DFC6F920-B747-493F-A58D-C1B5F4C51D02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,10 @@ Global
 		{A59B1391-8AC6-401F-919E-C36EC84F05FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A59B1391-8AC6-401F-919E-C36EC84F05FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A59B1391-8AC6-401F-919E-C36EC84F05FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFC6F920-B747-493F-A58D-C1B5F4C51D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFC6F920-B747-493F-A58D-C1B5F4C51D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFC6F920-B747-493F-A58D-C1B5F4C51D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFC6F920-B747-493F-A58D-C1B5F4C51D02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{7E923F6C-3015-455A-8E71-284B2C331171} = {F95D6AB5-8D07-49F0-9D92-027241D01E2F}
 		{9EB901EA-63A9-4741-914F-9FDEE660CB52} = {F95D6AB5-8D07-49F0-9D92-027241D01E2F}
 		{A59B1391-8AC6-401F-919E-C36EC84F05FE} = {F95D6AB5-8D07-49F0-9D92-027241D01E2F}
+		{DFC6F920-B747-493F-A58D-C1B5F4C51D02} = {1296F4FD-0656-463D-9A2E-105E24DA7C15}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B04A54F6-493D-407B-9763-34293BD3166C}

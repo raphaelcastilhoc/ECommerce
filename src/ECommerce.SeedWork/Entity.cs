@@ -7,7 +7,7 @@ namespace ECommerce.SeedWork
     {
         private List<INotification> _domainEvents;
 
-        public T Id { get; private set; }
+        public T Id { get; protected set; }
 
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents;
 

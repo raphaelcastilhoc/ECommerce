@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DeliveryTrackings\Commands\" />
+    <Folder Include="DeliveryTrackings\DomainEvents\" />
+    <Folder Include="DeliveryTrackings\Infrastructure\" />
+    <Folder Include="DeliveryTrackings\IntegrationEvents\" />
+    <Folder Include="DeliveryTrackings\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerce.ApiInfrastructure\ECommerce.ApiInfrastructure.csproj" />
+    <ProjectReference Include="..\ECommerce.EventBus\ECommerce.EventBus.csproj" />
+    <ProjectReference Include="..\ECommerce.SeedWork\ECommerce.SeedWork.csproj" />
+  </ItemGroup>
+
+</Project>
