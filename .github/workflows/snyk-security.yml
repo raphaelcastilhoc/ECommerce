@@ -46,13 +46,16 @@ jobs:
         #- uses: actions/setup-node@v3
         #  with:
         #    node-version: 16
-
-        env:
-          # This is where you will need to introduce the Snyk API token created with your Snyk account
+        
+        with:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+        # env:
+          # This is where you will need to introduce the Snyk API token created with your Snyk account
+          # SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
-      - name: SNYK TOKEN SHOW
-        run: echo $SNYK_TOKEN
+      - name: Show token
+        run: echo "token $SNYK_TOKEN"
 
         # Runs Snyk Code (SAST) analysis and uploads result into GitHub.
         # Use || true to not fail the pipeline
